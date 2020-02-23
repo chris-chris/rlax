@@ -657,6 +657,13 @@ class CategoricalCrossEntropyTest(parameterized.TestCase):
     actual = cross_entropy(labels, logits)
     np.testing.assert_allclose(self.expected, actual, atol=1e-4)
 
+class DistributionsBasicTest(parameterized.TestCase):
+
+  def test_categorical_sample(self):
+    key = np.array([0, 0], dtype=np.uint32)
+    probs = np.array([[0.1, 0.2, 0.7], [0.2, 0.2, 0.6]])
+    cate_sample = distributions._categorical_sample(key, probs)
+    self.assertEqual(cate_sample.shape, (2, ))
 
 if __name__ == '__main__':
   absltest.main()
